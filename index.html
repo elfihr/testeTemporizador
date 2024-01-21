@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador</title>
+	<style>
+		*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    background: #43766C;
+
+
+}
+
+main{
+    padding: 1rem 0;
+    text-align: center;
+    background: #DED0B6;
+    border: 3px solid #B2A59B;
+    border-radius: 6px;
+    width: 30rem;
+    box-shadow: 4px 4px 4px rgba(0,0,0,.5);
+}
+
+.indice{
+    padding: 1rem 0;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.input{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.botao{
+    width: 5rem;
+    height: 2rem;
+    border-radius: 6px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,.25);
+    background: #FAEF9B;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+#clock{
+    font-size: 2rem;
+}
+
+#calcular:hover,.botao:hover{
+    background: #f1de4e;
+}
+
+#calcular:active{
+    transform: scale(0.95);
+}
+
+.input input{
+    text-align: center;
+}
+
+#print{
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+	</style>
+</head>
+<body>
+    <main>
+        <h2>Timer</h2>
+        <p id="clock">00:00:00</p>
+        
+        <div class="input">
+            <button class="botao inicia" id="inicia">Iniciar</button>
+            <button class="botao pausa" id="pausa">Pausa</button>
+            <button class="botao zera" id="zera">Zera</button>
+        </div>
+      
+    </main>
+    <script>
+        function tempo(){
+            const print = document.querySelector('#clock')
+        const inicia = document.querySelector('#inicia')
+        const pausa = document.querySelector('#pausa')
+        const zera = document.querySelector('#zera')
+
+        let segundo = 0;
+        let timer;
+
+        //============Funções============
+        function formataHora(){
+            const data = new Date(segundo * 1000)
+            return data.toLocaleTimeString('pt-BR',{ hour12:false,timeZone:'GMT'})
+        }        
+
+        function startClock(){
+            timer = setInterval(function(){
+                segundo++;
+                print.innerHTML = formataHora(segundo)
+            },1000)
+        }
+         //============FIM============
+
+         
+        document.addEventListener('click',function(e){
+            const el =e.target;
+
+            if(el.classList.contains("inicia")){
+                clearInterval(timer) //zera o temporizador
+                startClock()
+            }
+            if(el.classList.contains("pausa")){
+                clearInterval(timer)
+            }
+            if(el.classList.contains("zera")){
+                clearInterval(timer)
+                print.innerHTML = '00:00:00'
+                segundo = 0
+            }
+        })
+        }
+
+       tempo()
+
+    </script>
+</body>
+</html>
